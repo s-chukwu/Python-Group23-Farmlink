@@ -1,7 +1,10 @@
+#!/usr/bin/env python3
+
+import sys
+import sqlite3
 import email
 import getpass
 import re
-import sqlite3
 
 def init_db():
     conn = sqlite3.connect("farmlink.db")
@@ -471,3 +474,64 @@ def buyer_menu(buyer_id, cursor, conn):
             break
         else:
             print("Invalid choice. Please enter a number between 1 and 4.")
+
+
+# =========================
+# MAIN APPLICATION LOOP
+# =========================
+
+def main():
+    # Initialize the db on startup
+    init_db()
+    
+    print("\n" + "="*50)
+    print(" Welcome to FarmLink - The Market Connector! ")
+    print("="*50)
+
+    while True:
+        print("\n=== MAIN MENU ===")
+        print("1. Login")
+        print("2. Register New User")
+        print("3. Exit System")
+
+        choice = input("Select an option (1-3): ").strip()
+
+        if choice == '1':
+            # Call login function
+            user = login()
+            
+            if user:
+                # user is a tuple from the DB: (id, name, email, password, role)
+                user_id = user[0]
+                user_name = user[1]
+                role = user[4]
+
+                print(f"\n Login successful! Welcome back, {user_name}.")
+
+                # Open db connection for buyer and farmer logic
+                conn = sqlite3.connect("farmlink.db")
+                conn.execute("PRAGMA foreign_keys = ON")
+                cursor = conn.cursor()
+
+                # Link to correct dashboard based on role
+                if role == "Farmer":
+                    farmer_menu(user_id, cursor, conn)
+                elif role == "Buyer":
+                    buyer_menu(user_id, cursor, conn)
+                
+                # Close connection when user logout of their dashboard
+                conn.close()
+
+        elif choice == '2':
+            # Call signup function
+            signup()
+
+        elif choice == '3':
+            print("\n Exiting FarmLink..... Goodbye!")
+            sys.exit()
+
+        else:
+            print("Oops invalid choice. Please enter 1, 2, or 3.")
+
+if __name__ == "__main__":
+    main()
