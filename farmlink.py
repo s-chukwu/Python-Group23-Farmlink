@@ -65,6 +65,9 @@ def signup():
         #check if there is an existing user with the inserted email
         while True:
             email = input("Enter your email: ")
+            if not is_valid_email(email):
+                print("Invalid email format. Please try again.")
+                continue
             if not userExists(conn, email):
                 break
             print('Account already exists, please enter another one or login')
@@ -72,10 +75,15 @@ def signup():
         # Obscure password while entering it
         password = getpass.getpass("Enter your password: ")
 
-        # get valid role
-        role=get_valid_role()
+# get valid role
+        role = get_valid_role()
         cursor.execute('INSERT INTO users (name, email, password, role) values (?, ?, ?, ?)', (name, email, password, role))
-        conn.commit()
+        
+        conn.commit() # This saves it to the database
+        
+        
+        print(f"\n Success! '{name}' has been successfully registered as a {role}.")
+        
     except sqlite3.IntegrityError:
         print('Database error occurred, please try again')
     except Exception as e:
@@ -99,7 +107,7 @@ def is_valid_email(email):
 def get_valid_role():
     while True:
         try:
-            role_choice = int(input("Enter a number that matches who you are registering as: \n 1. Farmer \n 2. Buyer"))
+            role_choice = int(input("Enter a number that matches who you are registering as: \n 1. Farmer \n 2. Buyer \nYour choice (1 or 2): "))
             if role_choice == 1:
                return "Farmer"
             elif role_choice == 2:
@@ -122,9 +130,9 @@ def login():
             cursor.execute('SELECT * FROM users WHERE (email,password) = (?,?)', (email,password))
             user = cursor.fetchone()
             if user is not None:
-                print('Welcome, {}!'.format(user[0]))
+                print('Welcome, {}!'.format(user[1]))
                 ## Call the appropriate method for the given role
-                return
+                return user
             else:
                 remaining_attempts = max_attempts - attempt
                 print(f'Please enter a valid email and password, you are left with {remaining_attempts}')
@@ -534,4 +542,10 @@ def main():
             print("Oops invalid choice. Please enter 1, 2, or 3.")
 
 if __name__ == "__main__":
-    main()
+     try:
+
+        main()
+
+     except KeyboardInterrupt:
+        print("\n\n Exiting FarmLink...... Goodbye!")
+        sys.exit(0)
