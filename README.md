@@ -57,8 +57,8 @@ The application uses a localized SQLite relational database with three connected
 
 ### Team Members & Contributions
 This project was collaboratively built by Group 23:
-Kelly Sangwe - Database Architect ( Designed SQL schemas and init_db() )
-Magnificat Marie Augusta Umutesi - Authentication Engineer (Built signup() and login() with Regex/Getpass)
-Batsinda Benoit - Farmer Logic Developer (Built supply-side CRUD operations)
-Innocente Mutabazi Umuhuza - Buyer Logic Developer (Built demand-side JOIN queries and transaction math)
-Sochukwuma Chukwu - System Integrator (Main application loop, role routing, exception handling, and GitHub management)
+* Kelly Sangwe - Database Architect ( Designed SQL schemas and init_db() )
+* Magnificat Marie Augusta Umutesi - Authentication Engineer (Built signup() and login() with Regex/Getpass)
+* Batsinda Benoit - Farmer Logic Developer (Built supply-side CRUD operations)
+* Innocente Mutabazi Umuhuza - Buyer Logic Developer (Built demand-side JOIN queries and transaction math)
+* Sochukwuma Chukwu - System Integrator (Main application loop, role routing, exception handling, and GitHub management)
