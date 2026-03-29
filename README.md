@@ -37,15 +37,15 @@ This application is designed to be incredibly smooth to run. It requires **no ex
 **1. Clone the repository:**
 ```bash
 git clone https://github.com/s-chukwu/Python-Group23-Farmlink
-
+```
 **2. Navigate into the project folder:**
 ```bash
 cd Python-Group23-Farmlink
-
+```
 **3. Run the application:**
 ```bash
 python3 farmlink.py
-
+```
 Database Note: You do not need to configure or install a database. The very first time you run the script, init_db() will automatically create a farmlink.db file in your folder with all the required tables and schema perfectly configured.
 
 ### Database Architecture
