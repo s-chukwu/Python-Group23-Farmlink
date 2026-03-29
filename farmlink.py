@@ -135,7 +135,7 @@ def login():
                 return user
             else:
                 remaining_attempts = max_attempts - attempt
-                print(f'Please enter a valid email and password, you are left with {remaining_attempts}')
+                print(f'Incorrect email or password, please try again. \nYou are left with {remaining_attempts} attempts')
 
         print('You have reached the maximum number of attempts to login, try again later.')
         return None
